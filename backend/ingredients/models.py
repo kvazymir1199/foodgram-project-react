@@ -14,21 +14,9 @@ class Ingredient(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        verbose_name = "Ингредиент"
+        verbose_name_plural = "Ингредиенты"
 
-class IngredientForRecipe(models.Model):
-    ingredient = models.ForeignKey(
-        Ingredient,
-        on_delete=models.CASCADE,
-        related_name="ingredient",
-        verbose_name="Ингредиент в рецепте",
-        help_text="Ингредиент в рецепте",
-    )
-    amount = models.IntegerField(
-        validators=[
-            MinValueValidator(1),
-        ],
-        help_text="Значение должно быть больше 1",
-    )
 
-    def __str__(self) -> str:
-        return f"{self.ingredient.name} --> {self.amount}"
+
