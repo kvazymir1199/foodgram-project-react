@@ -26,5 +26,5 @@ jobs:
         pip install -r backend/foodgramm/requirements.txt
     - name: Test with flake8
       run: |
-        python -m flake8 --config=backend/foodgramm/setup.cfg
+        python -m flake8 --config=backend/setup.cfg
 
