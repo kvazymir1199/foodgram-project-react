@@ -9,8 +9,6 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
-from ingredients.models import Ingredient
-
 X, Y, LINE_HEIGH = (120, 700, 20)
 FONT_SIZE = 12
 PDF_TITLE = "Список покупок:"
@@ -28,6 +26,8 @@ def get_pdf_file(buy_list):
     y = Y
     p.drawString(X - 20, y, PDF_TITLE)
     y -= LINE_HEIGH
+    
+    from ingredients.models import Ingredient
     for i, item in enumerate(buy_list, start=1):
         ingredient = Ingredient.objects.get(pk=item["ingredient"])
         text = (

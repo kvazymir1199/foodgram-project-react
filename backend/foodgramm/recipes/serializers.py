@@ -6,12 +6,11 @@ from django.core.files.base import ContentFile
 from django.core.validators import MinValueValidator
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-
-from ingredients.models import Ingredient
 from tags.models import Tag
 from tags.serializers import TagSerializer
 
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
+from ingredients.models import Ingredient
 
 User = get_user_model()
 
