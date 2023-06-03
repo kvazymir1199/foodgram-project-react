@@ -2,8 +2,9 @@ from distutils.util import strtobool
 
 from django_filters import rest_framework
 
-from .models import FavoriteRecipe, Recipe, ShopingCard
 from tags.models import Tag
+
+from .models import FavoriteRecipe, Recipe, ShopingCard
 
 CHOICES_LIST = (("0", "False"), ("1", "True"))
 
@@ -24,27 +25,25 @@ class RecipeFilter(rest_framework.FilterSet):
         if self.request.user.is_anonymous:
             return Recipe.objects.none()
 
-        favorites = FavoriteRecipe.objects.filter(user=self.request.user)
-        recipes = [item.recipe.id for item in favorites]
-        new_queryset = queryset.filter(id__in=recipes)
-
+        new_queryset = FavoriteRecipe.objects.filter(
+            user=self.request.user
+        ).values_list("recipe_id")
         if not strtobool(value):
             return queryset.difference(new_queryset)
 
-        return queryset.filter(id__in=recipes)
+        return queryset.filter(id__in=new_queryset)
 
     def is_in_shopping_cart_method(self, queryset, name, value):
         if self.request.user.is_anonymous:
             return Recipe.objects.none()
-
-        shopping_cart = ShopingCard.objects.filter(user=self.request.user)
-        recipes = [item.recipe.id for item in shopping_cart]
-        new_queryset = queryset.filter(id__in=recipes)
+        new_queryset = ShopingCard.objects.filter(user=self.request.user).values_list(
+            "recipe_id"
+        )
 
         if not strtobool(value):
             return queryset.difference(new_queryset)
 
-        return queryset.filter(id__in=recipes)
+        return queryset.filter(id__in=new_queryset)
 
     class Meta:
         model = Recipe

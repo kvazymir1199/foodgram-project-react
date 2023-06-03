@@ -1,12 +1,14 @@
 import os
 from io import BytesIO
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
+from pathlib import Path
+
+from django.conf import settings
 from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from pathlib import Path
-from django.conf import settings
+from reportlab.pdfgen import canvas
+
 from ingredients.models import Ingredient
 
 X, Y, LINE_HEIGH = (120, 700, 20)

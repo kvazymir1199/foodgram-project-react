@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import Tag
 from .validators import validate_hex
 

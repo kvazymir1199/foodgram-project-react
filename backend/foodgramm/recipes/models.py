@@ -1,12 +1,10 @@
-from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
-
-# Create your models here.
+from django.db import models
 
 from ingredients.models import Ingredient
 from tags.models import Tag
-from django.core.validators import MinValueValidator
+
 
 User = get_user_model()
 

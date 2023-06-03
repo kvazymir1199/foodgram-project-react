@@ -1,25 +1,21 @@
-from django.shortcuts import render
 from django.db.models import Sum
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import exceptions, status, viewsets
 from rest_framework.decorators import action
-from .filters import RecipeFilter
-from django_filters.rest_framework import DjangoFilterBackend
-from .models import IngredientsForRecipe
-from .pdf2html import get_pdf_file
+from rest_framework.response import Response
 
-# Create your views here.
-
-from .models import Recipe
-from .serializers import (
-    RecipeSerializer,
-    RecipeCreateUpdateSerializer,
-    ShortRecipeSerializer,
-)
-from .models import FavoriteRecipe, ShopingCard
 from ingredients.models import Ingredient
+
+from .filters import RecipeFilter
+from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from .pagination import RecipeViewSetPagination
+from .pdf2html import get_pdf_file
+from .serializers import (
+RecipeCreateUpdateSerializer,
+RecipeSerializer,
+ShortRecipeSerializer,
+)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -36,8 +32,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=("post", "delete"))
     def favorite(self, request, pk=None):
         user = self.request.user
+        print(1)
         recipe = get_object_or_404(Recipe, id=pk)
-        check = FavoriteRecipe.objects.filter(user=user).exists()
+        check = FavoriteRecipe.objects.filter(user=user,recipe=recipe).exists()
         if self.request.method == "DELETE":
             if not check:
                 raise exceptions.ValidationError("Рецепта в избранном нет")

@@ -1,0 +1,14 @@
+{
+    "team.showWelcomeMessage": false,
+    "editor.formatOnSave": true,
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.pylintPath": "C:Users/User/AppData/Roaming/Python/Python37/site-packages/pylint",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true
+}
+
+where "python.linting.pycodestyleEnabled": false, (do FALSE)
