@@ -26,7 +26,6 @@ def get_pdf_file(buy_list):
     y = Y
     p.drawString(X - 20, y, PDF_TITLE)
     y -= LINE_HEIGH
-    
     from ingredients.models import Ingredient
     for i, item in enumerate(buy_list, start=1):
         ingredient = Ingredient.objects.get(pk=item["ingredient"])

@@ -2,7 +2,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-
 from ingredients.urls import router as ingredients_router
 from recipes.urls import router as recipes_router
 from tags.urls import router as tag_router
