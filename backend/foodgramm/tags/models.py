@@ -1,7 +1,5 @@
 from django.db import models
 
-from .validators import validate_hex
-
 
 class Tag(models.Model):
     name = models.CharField(

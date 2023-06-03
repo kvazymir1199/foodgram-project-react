@@ -1,23 +1,17 @@
 import base64
+
 from django.contrib.auth import get_user_model
 from django.core import exceptions
-from django.shortcuts import get_object_or_404
-from rest_framework import serializers
 from django.core.files.base import ContentFile
 from django.core.validators import MinValueValidator
+from django.shortcuts import get_object_or_404
+from rest_framework import serializers
 
-from ingredients.serializers import IngredientSerializer
-from tags.serializers import TagSerializer
-
-from .models import (
-Recipe,
-TagForRecipe,
-IngredientsForRecipe,
-FavoriteRecipe,
-ShopingCard,
-)
 from ingredients.models import Ingredient
 from tags.models import Tag
+from tags.serializers import TagSerializer
+
+from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 
 User = get_user_model()
 
@@ -70,7 +64,8 @@ class CreateUpdateRecipeIngredientsSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = serializers.SerializerMethodField(method_name="get_ingredients")
+    ingredients = serializers.SerializerMethodField(
+        method_name="get_ingredients")
     tags = TagSerializer(many=True)
     author = CustomUserSerializer(read_only=True)
     is_favorited = serializers.SerializerMethodField(
@@ -108,12 +103,13 @@ class Base64ImageField(serializers.ImageField):
 
 class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
     author = CustomUserSerializer(read_only=True)
-    tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
+    tags = serializers.PrimaryKeyRelatedField(
+        queryset=Tag.objects.all(), many=True)
     ingredients = CreateUpdateRecipeIngredientsSerializer(many=True)
     image = Base64ImageField()
     cooking_time = serializers.IntegerField(
         validators=(
-            MinValueValidator(1, message="Время приготовления должно быть больше 1."),
+            MinValueValidator(1, message="Укажите время больше 1."),
         )
     )
 
@@ -168,7 +164,9 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
                 ingredient = get_object_or_404(Ingredient, pk=ingredient["id"])
 
                 IngredientsForRecipe.objects.update_or_create(
-                    recipe=instance, ingredient=ingredient, defaults={"amount": amount}
+                    recipe=instance,
+                    ingredient=ingredient,
+                    defaults={"amount": amount}
                 )
 
         return super().update(instance, validated_data)

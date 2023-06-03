@@ -13,8 +13,6 @@ from .serializers import SubscriptionSerializer
 
 User = get_user_model()
 
-User = get_user_model()
-
 
 class CustomUserViewSet(UserViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -37,7 +35,9 @@ class CustomUserViewSet(UserViewSet):
         return self.get_paginated_response(serializer.data)
 
     @action(
-        detail=True, methods=("post", "delete"), serializer_class=SubscriptionSerializer
+        detail=True,
+        methods=("post", "delete"),
+        serializer_class=SubscriptionSerializer
     )
     def subscribe(self, request, id=None):
         user = self.request.user
@@ -45,7 +45,8 @@ class CustomUserViewSet(UserViewSet):
 
         if self.request.method == "POST":
             if user == author:
-                raise exceptions.ValidationError("Подписка на самого себя запрещена.")
+                raise exceptions.ValidationError(
+                    "Подписка на самого себя запрещена.")
             if Subscription.objects.filter(user=user, author=author).exists():
                 raise exceptions.ValidationError("Подписка уже оформлена.")
 
@@ -55,12 +56,16 @@ class CustomUserViewSet(UserViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         if self.request.method == "DELETE":
-            if not Subscription.objects.filter(user=user, author=author).exists():
+            if not Subscription.objects.filter(user=user, author=author
+                                               ).exists():
                 raise exceptions.ValidationError(
                     "Подписка не была оформлена, либо уже удалена."
                 )
 
-            subscription = get_object_or_404(Subscription, user=user, author=author)
+            subscription = get_object_or_404(
+                Subscription,
+                user=user,
+                author=author)
             subscription.delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)

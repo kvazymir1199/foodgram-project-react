@@ -5,7 +5,6 @@ from django.db import models
 from ingredients.models import Ingredient
 from tags.models import Tag
 
-
 User = get_user_model()
 
 
@@ -61,7 +60,9 @@ class Recipe(models.Model):
 
 
 class TagForRecipe(models.Model):
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name="tag_recipe")
+    tag = models.ForeignKey(Tag,
+                            on_delete=models.CASCADE,
+                            related_name="tag_recipe")
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name="recipe_tag"
     )
@@ -77,7 +78,8 @@ class TagForRecipe(models.Model):
 class IngredientsForRecipe(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.PROTECT)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    amount = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
+    amount = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1)])
 
     class Meta:
         verbose_name = "Ингредиенты рецепта"

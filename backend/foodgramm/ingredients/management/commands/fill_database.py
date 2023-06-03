@@ -1,6 +1,6 @@
+import csv
 import os
 from pathlib import Path
-import csv
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -16,12 +16,17 @@ class Command(BaseCommand):
 
     def fill_user(self):
         data_path = os.path.join(
-            Path(settings.BASE_DIR).resolve().parent.parent, "data\\ingredients.csv"
+            Path(settings.BASE_DIR).resolve().parent.parent,
+            "data\\ingredients.csv"
         )
+
         with open(data_path, "r", encoding="utf-8") as csv_file:
             reader = csv.reader(csv_file)
             for row in reader:
-                Ingredient.objects.get_or_create(name=row[0], measurement_unit=row[1])
+                Ingredient.objects.get_or_create(
+                    name=row[0],
+                    measurement_unit=row[1]
+                    )
 
     def handle(self, *args, **options):
         self.fill_user()

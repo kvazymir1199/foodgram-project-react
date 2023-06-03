@@ -1,21 +1,16 @@
 from django.db.models import Sum
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import exceptions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from ingredients.models import Ingredient
-
 from .filters import RecipeFilter
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from .pagination import RecipeViewSetPagination
 from .pdf2html import get_pdf_file
-from .serializers import (
-RecipeCreateUpdateSerializer,
-RecipeSerializer,
-ShortRecipeSerializer,
-)
+from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
+                          ShortRecipeSerializer)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -32,22 +27,24 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=("post", "delete"))
     def favorite(self, request, pk=None):
         user = self.request.user
-        print(1)
         recipe = get_object_or_404(Recipe, id=pk)
-        check = FavoriteRecipe.objects.filter(user=user,recipe=recipe).exists()
+        check = FavoriteRecipe.objects.filter(
+            user=user, recipe=recipe).exists()
         if self.request.method == "DELETE":
             if not check:
                 raise exceptions.ValidationError("Рецепта в избранном нет")
-            favorite = get_object_or_404(FavoriteRecipe, user=user, recipe=recipe)
-            # favorite = FavoriteRecipe.objects.filter(user=user, recipe=recipe)
+            favorite = get_object_or_404(
+                FavoriteRecipe, user=user, recipe=recipe)
             favorite.delete()
+
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         if self.request.method == "POST":
             if check:
                 raise exceptions.ValidationError("Рецепт уже в избранном")
             FavoriteRecipe.objects.create(user=user, recipe=recipe)
-            serializer = ShortRecipeSerializer(recipe, context={"request": request})
+            serializer = ShortRecipeSerializer(
+                recipe, context={"request": request})
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -65,9 +62,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         if self.request.method == "POST":
             if check:
-                raise exceptions.ValidationError(f"Рецепт {pk} уже у вас в корзине")
+                raise exceptions.ValidationError(
+                    f"Рецепт {pk} уже у вас в корзине")
             ShopingCard.objects.create(user=user, recipe=recipe)
-            serializer = ShortRecipeSerializer(recipe, context={"request": request})
+            serializer = ShortRecipeSerializer(
+                recipe, context={"request": request})
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
