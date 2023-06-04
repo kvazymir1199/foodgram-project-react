@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
+
 from ingredients.models import Ingredient
 from tags.models import Tag
 
@@ -69,6 +70,11 @@ class TagForRecipe(models.Model):
     class Meta:
         verbose_name = "Теги рецепта"
         verbose_name_plural = "Теги рецепта"
+        constraints = (
+            models.UniqueConstraint(
+                fields=("tag", "recipe"), name="unique_tag_recipe"
+            ),
+        )
 
     def __str__(self) -> str:
         return f"В рецепте {self.recipe} указан тег:{self.tag}"
@@ -76,13 +82,20 @@ class TagForRecipe(models.Model):
 
 class IngredientsForRecipe(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.PROTECT)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name="amount_recipe")
     amount = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)])
 
     class Meta:
         verbose_name = "Ингредиенты рецепта"
         verbose_name_plural = "Ингредиенты рецепта"
+        constraints = (
+            models.UniqueConstraint(
+                fields=("ingredient", "recipe"),
+                name="unique_ingredient_recipe"
+            ),
+        )
 
     def __str__(self):
         return f"В рецепте {self.recipe} есть ингредиент {self.ingredient}"
@@ -115,7 +128,10 @@ class FavoriteRecipe(models.Model):
 
 class ShopingCard(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="shopping")
 
     class Meta:
         verbose_name = "Корзина"

@@ -1,5 +1,4 @@
 from distutils.util import strtobool
-
 from django_filters import rest_framework
 
 from tags.models import Tag
