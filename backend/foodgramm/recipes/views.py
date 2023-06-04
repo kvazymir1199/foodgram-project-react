@@ -24,59 +24,42 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return RecipeCreateUpdateSerializer
         return RecipeSerializer
 
-    @action(detail=True, methods=("post", "delete"))
-    def favorite(self, request, pk=None):
+    def add_to_model(self, request, model, pk=None):
         user = self.request.user
         recipe = get_object_or_404(Recipe, id=pk)
-        check = FavoriteRecipe.objects.filter(
+        check = model.objects.filter(
             user=user, recipe=recipe).exists()
         if self.request.method == "DELETE":
             if not check:
-                raise exceptions.ValidationError("Рецепта в избранном нет")
+                Response(status=status.HTTP_400_BAD_REQUEST)
             favorite = get_object_or_404(
-                FavoriteRecipe, user=user, recipe=recipe)
+                model, user=user, recipe=recipe)
             favorite.delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
 
-        if self.request.method == "POST":
-            if check:
-                raise exceptions.ValidationError("Рецепт уже в избранном")
-            FavoriteRecipe.objects.create(user=user, recipe=recipe)
-            serializer = ShortRecipeSerializer(
-                recipe, context={"request": request})
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        if check:
+            raise exceptions.ValidationError("Рецепт уже в избранном")
+        model.objects.create(user=user, recipe=recipe)
+        serializer = ShortRecipeSerializer(
+            recipe, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=("post", "delete"))
+    def favorite(self, request, pk=None):
+        return self.add_to_model(request, FavoriteRecipe, pk)
 
     @action(detail=True, methods=("post", "delete"))
     def shopping_cart(self, request, pk=None):
-        user = self.request.user
-        recipe = get_object_or_404(Recipe, id=pk)
-        check = ShopingCard.objects.filter(user=user, recipe=recipe).exists()
-        if self.request.method == "DELETE":
-            if not check:
-                raise exceptions.ValidationError(f"Рецепта {pk} нет в корзине")
-            favorite = get_object_or_404(ShopingCard, user=user, recipe=recipe)
-            favorite.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-
-        if self.request.method == "POST":
-            if check:
-                raise exceptions.ValidationError(
-                    f"Рецепт {pk} уже у вас в корзине")
-            ShopingCard.objects.create(user=user, recipe=recipe)
-            serializer = ShortRecipeSerializer(
-                recipe, context={"request": request})
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return self.add_to_model(request, ShopingCard, pk)
 
     @action(detail=False, methods=("get",))
     def download_shopping_cart(self, request):
         shopping_cart = ShopingCard.objects.filter(user=self.request.user)
-        recipes = [item.recipe.id for item in shopping_cart]
+        recipes = shopping_cart.values_list("recipe__id", flat=True)
         buy_list = (
             IngredientsForRecipe.objects.filter(recipe__in=recipes)
             .values("ingredient")
-            .annotate(amount=Sum("amount"))
+            .annotate(total_amount=Sum("amount"))
         )
         return get_pdf_file(buy_list)

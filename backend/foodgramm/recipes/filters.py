@@ -1,6 +1,7 @@
 from distutils.util import strtobool
 
 from django_filters import rest_framework
+
 from tags.models import Tag
 
 from .models import FavoriteRecipe, Recipe, ShopingCard
@@ -16,7 +17,8 @@ class RecipeFilter(rest_framework.FilterSet):
         choices=CHOICES_LIST, method="is_in_shopping_cart_method"
     )
     author = rest_framework.NumberFilter(
-        field_name="author", lookup_expr="exact")
+        field_name="author",
+        lookup_expr="exact")
     tags = rest_framework.ModelMultipleChoiceFilter(
         field_name="tags__slug",
         to_field_name="slug",

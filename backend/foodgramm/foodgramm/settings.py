@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "recipes.apps.RecipesConfig",
     "tags.apps.TagsConfig",
     "users.apps.UsersConfig",
+    "api.apps.ApiConfig",
     "djoser",
     "drf_pdf",
     "rest_framework",

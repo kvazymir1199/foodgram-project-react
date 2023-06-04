@@ -30,7 +30,7 @@ def get_pdf_file(buy_list):
     for i, item in enumerate(buy_list, start=1):
         ingredient = Ingredient.objects.get(pk=item["ingredient"])
         text = (
-            f'{i}: {ingredient.name}, {item["amount"]} '
+            f'{i}: {ingredient.name}, {item["total_amount"]} '
             f"{ingredient.measurement_unit}."
         )
         p.drawString(X, y, text)
