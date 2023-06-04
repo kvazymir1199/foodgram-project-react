@@ -3,7 +3,6 @@ from django.core import exceptions
 from django.core.validators import MinValueValidator
 from django.db import transaction
 from rest_framework import serializers
-
 from ingredients.models import Ingredient
 from tags.models import Tag
 from tags.serializers import TagSerializer
