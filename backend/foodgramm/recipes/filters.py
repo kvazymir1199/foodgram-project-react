@@ -5,7 +5,9 @@ from django_filters.rest_framework import (
     NumberFilter,
     ModelMultipleChoiceFilter
 )
+
 from tags.models import Tag
+
 from .models import FavoriteRecipe, Recipe, ShopingCard
 
 
