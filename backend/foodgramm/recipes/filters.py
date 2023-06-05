@@ -1,13 +1,12 @@
 from distutils.util import strtobool
-
-from django_filters.rest_framework import (FilterSet,
-                                        ChoiceFilter,
-                                        NumberFilter,
-                                        ModelMultipleChoiceFilter)
-                                        
+from django_filters.rest_framework import (
+    FilterSet,
+    ChoiceFilter,
+    NumberFilter,
+    ModelMultipleChoiceFilter
+)
 from tags.models import Tag
-
-from .models import (FavoriteRecipe, Recipe, ShopingCard)
+from .models import FavoriteRecipe, Recipe, ShopingCard
 
 
 CHOICES_LIST = (
