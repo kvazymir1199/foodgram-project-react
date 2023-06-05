@@ -9,10 +9,8 @@ from .filters import RecipeFilter
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from .pagination import RecipeViewSetPagination
 from .pdf2html import get_pdf_file
-from .serializers import (
-    RecipeCreateUpdateSerializer,
-    RecipeSerializer,
-    ShortRecipeSerializer)
+from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
+                          ShortRecipeSerializer)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

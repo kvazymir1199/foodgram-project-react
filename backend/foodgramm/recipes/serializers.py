@@ -3,16 +3,13 @@ from django.core import exceptions
 from django.core.validators import MinValueValidator
 from django.db import transaction
 from rest_framework import serializers
+
 from ingredients.models import Ingredient
 from tags.models import Tag
 from tags.serializers import TagSerializer
 
 from .fields import Base64ImageField
-from .models import (
-    FavoriteRecipe,
-    IngredientsForRecipe,
-    Recipe,
-    ShopingCard)
+from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 
 User = get_user_model()
 
