@@ -1,9 +1,10 @@
 from distutils.util import strtobool
 
 from django_filters.rest_framework import (FilterSet,
-                                           ChoiceFilter,
-                                           NumberFilter,
-                                           ModelMultipleChoiceFilter)
+                                        ChoiceFilter,
+                                        NumberFilter,
+                                        ModelMultipleChoiceFilter)
+                                        
 from tags.models import Tag
 
 from .models import (FavoriteRecipe, Recipe, ShopingCard)
