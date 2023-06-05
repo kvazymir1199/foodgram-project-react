@@ -6,7 +6,8 @@ from django_filters.rest_framework import (FilterSet,
                                            ModelMultipleChoiceFilter)
 from tags.models import Tag
 
-from .models import (FavoriteRecipe,Recipe, ShopingCard)
+from .models import (FavoriteRecipe, Recipe, ShopingCard)
+
 
 CHOICES_LIST = (
     (0, "False"),
