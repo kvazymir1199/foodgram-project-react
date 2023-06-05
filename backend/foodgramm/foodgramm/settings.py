@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     "ingredients.apps.IngredientsConfig",
     "recipes.apps.RecipesConfig",
     "tags.apps.TagsConfig",
-    "users.apps.UsersConfig",    
+    "users.apps.UsersConfig",
     "djoser",
     "drf_pdf",
     "rest_framework",

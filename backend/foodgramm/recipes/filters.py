@@ -1,7 +1,6 @@
 from distutils.util import strtobool
 
 from django_filters import rest_framework
-
 from tags.models import Tag
 
 from .models import FavoriteRecipe, Recipe, ShopingCard
@@ -10,6 +9,8 @@ CHOICES_LIST = (
     (0, "False"),
     (1, "True"),
 )
+
+
 class RecipeFilter(rest_framework.FilterSet):
     is_favorited = rest_framework.ChoiceFilter(
         choices=CHOICES_LIST, method="is_favorited_method"
