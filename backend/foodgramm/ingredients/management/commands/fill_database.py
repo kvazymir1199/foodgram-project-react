@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
     help = "Загрузка информации из csv файлов в базу данных"
 
-    def fill_user(self):
+    def fill_ingredients(self):
         data_path = os.path.join(
             Path(settings.BASE_DIR).resolve().parent.parent,
             "data\\ingredients.csv"
@@ -28,5 +28,5 @@ class Command(BaseCommand):
                     measurement_unit=row[1]
                     )
 
-    def handle(self, *args, **options):
+    def fill_ingredients(self, *args, **options):
         self.fill_user()
