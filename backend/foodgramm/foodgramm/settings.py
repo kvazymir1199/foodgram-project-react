@@ -9,21 +9,9 @@ SECRET_KEY = os.getenv("SECRET_KEY", default="secret_key")
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost","127.0.0.1","[::1]"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
 
-# from dotenv import load_dotenv
-# load_dotenv(os.path.join(BASE_DIR.parent.parent, 'infra/.env'), verbose=True)
-DATABASES = {
-   'default': {
-       'ENGINE': os.environ.get('DB_ENGINE',default="django.db.backends.postgresql"),
-       'NAME': os.environ.get('POSTGRES_DB',default="postgres"),
-       'USER': os.environ.get('POSTGRES_USER',default="postgres"),
-       'PASSWORD': os.environ.get('POSTGRES_PASSWORD',default="postgres"),
-       'HOST': os.environ.get('DB_HOST',default="localhost" ),
-       'PORT': os.environ.get('DB_PORT',default="5432" ),
-   }
-}
-
+ 
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
