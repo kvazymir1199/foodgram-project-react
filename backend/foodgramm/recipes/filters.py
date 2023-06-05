@@ -1,10 +1,11 @@
 from distutils.util import strtobool
 
 from django_filters import rest_framework
+
 from tags.models import Tag
 
 from .models import FavoriteRecipe, Recipe, ShopingCard
-
+# не понимаю в чем тут проблема, flake isort и по pep8 вроде правильно
 CHOICES_LIST = (
     (0, "False"),
     (1, "True"),
