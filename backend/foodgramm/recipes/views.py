@@ -9,8 +9,10 @@ from .filters import RecipeFilter
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from .pagination import RecipeViewSetPagination
 from .pdf2html import get_pdf_file
-from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
-                          ShortRecipeSerializer)
+from .serializers import (
+    RecipeCreateUpdateSerializer,
+    RecipeSerializer,
+    ShortRecipeSerializer)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -24,7 +26,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return RecipeCreateUpdateSerializer
         return RecipeSerializer
 
-    def add_to_model(self, request, model, pk=None):
+    def add_or_delete(self, request, model, pk=None):
         user = self.request.user
         recipe = get_object_or_404(Recipe, id=pk)
         check = model.objects.filter(
@@ -39,7 +41,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         if check:
-            raise exceptions.ValidationError("Рецепт уже в избранном")
+            Response(status=status.HTTP_400_BAD_REQUEST)
         model.objects.create(user=user, recipe=recipe)
         serializer = ShortRecipeSerializer(
             recipe, context={"request": request})

@@ -8,7 +8,11 @@ from tags.models import Tag
 from tags.serializers import TagSerializer
 
 from .fields import Base64ImageField
-from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
+from .models import (
+    FavoriteRecipe,
+    IngredientsForRecipe,
+    Recipe,
+    ShopingCard)
 
 User = get_user_model()
 
@@ -106,8 +110,7 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
         return value
 
     def add_ingredients(self, ingredients, recipe):
-        with transaction.atomic():
-            IngredientsForRecipe.objects.filter(recipe=recipe).delete()
+        with transaction.atomic():            
             recipe_ingredients = [
                 IngredientsForRecipe(
                     recipe=recipe,
