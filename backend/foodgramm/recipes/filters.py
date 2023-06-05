@@ -1,12 +1,12 @@
 from distutils.util import strtobool
 
-from django_filters import rest_framework
+from django_filters.rest_framework import (FilterSet,
+                                           ChoiceFilter,
+                                           NumberFilter,
+                                           ModelMultipleChoiceFilter)
 from tags.models import Tag
 
-from .models import (
-    FavoriteRecipe,
-    Recipe,
-    ShopingCard)
+from .models import (FavoriteRecipe,Recipe, ShopingCard)
 
 CHOICES_LIST = (
     (0, "False"),
@@ -14,17 +14,17 @@ CHOICES_LIST = (
 )
 
 
-class RecipeFilter(rest_framework.FilterSet):
-    is_favorited = rest_framework.ChoiceFilter(
+class RecipeFilter(FilterSet):
+    is_favorited = ChoiceFilter(
         choices=CHOICES_LIST, method="is_favorited_method"
     )
-    is_in_shopping_cart = rest_framework.ChoiceFilter(
+    is_in_shopping_cart = ChoiceFilter(
         choices=CHOICES_LIST, method="is_in_shopping_cart_method"
     )
-    author = rest_framework.NumberFilter(
+    author = NumberFilter(
         field_name="author",
         lookup_expr="exact")
-    tags = rest_framework.ModelMultipleChoiceFilter(
+    tags = ModelMultipleChoiceFilter(
         field_name="tags__slug",
         to_field_name="slug",
         queryset=Tag.objects.all()
