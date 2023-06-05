@@ -51,12 +51,12 @@ jobs:
         with:
           push: true
           tags: kvazymir1199/foodgramm_backend
-          context: ./backend/foodgramm
+          context: backend/foodgramm/
 
       - name: Push frontend image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: kvazymir1199/foodgramm_frontend
-          context: ./frontend
+          context: frontend/
 
