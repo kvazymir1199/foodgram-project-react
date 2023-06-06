@@ -31,7 +31,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             user=user, recipe=recipe).exists()
         if self.request.method == "DELETE":
             if not check:
-                Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response(status=status.HTTP_400_BAD_REQUEST)
             favorite = get_object_or_404(
                 model, user=user, recipe=recipe)
             favorite.delete()
@@ -39,7 +39,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         if check:
-            Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         model.objects.create(user=user, recipe=recipe)
         serializer = ShortRecipeSerializer(
             recipe, context={"request": request})
