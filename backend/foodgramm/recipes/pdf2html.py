@@ -12,10 +12,8 @@ from reportlab.pdfgen import canvas
 X, Y, LINE_HEIGH = (120, 700, 20)
 FONT_SIZE = 12
 PDF_TITLE = "Список покупок:"
-DATA_PATH = os.path.join(
-    Path(settings.BASE_DIR),
-    "\data\\font\\DejaVuSansCondensed.ttf",
-)
+DATA_PATH = "\data\\font\\DejaVuSansCondensed.ttf"
+
 
 
 def get_pdf_file(buy_list):
