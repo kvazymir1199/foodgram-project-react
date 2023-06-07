@@ -15,11 +15,12 @@ class Command(BaseCommand):
     help = "Загрузка информации из csv файлов в базу данных"
 
     def fill_ingredients(self):
+        self.stdout.write(f"Путь: {settings.BASE_DIR}")
         data_path = os.path.join(
-            Path(settings.BASE_DIR).resolve().parent.parent,
-            "data\\ingredients.csv"
+            Path(settings.BASE_DIR),
+            "data/ingredients.csv"
         )
-
+       
         with open(data_path, "r", encoding="utf-8") as csv_file:
             reader = csv.reader(csv_file)
             for row in reader:
@@ -28,5 +29,8 @@ class Command(BaseCommand):
                     measurement_unit=row[1]
                     )
 
-    def fill_ingredients(self, *args, **options):
-        self.fill_user()
+    def handle(self, *args, **kwargs):
+        self.stdout.write("Подождите. Заполнение базы данных.")
+        self.fill_ingredients()
+        self.stdout.write("База данных заполнена")
+        
