@@ -1,6 +1,9 @@
 name: foodgram_react_project_workflow
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
     build_and_push_to_docker_hub:
