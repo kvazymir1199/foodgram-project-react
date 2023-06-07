@@ -14,7 +14,7 @@ FONT_SIZE = 12
 PDF_TITLE = "Список покупок:"
 DATA_PATH = os.path.join(
     Path(settings.BASE_DIR),
-    "\data\\font\\DejaVuSansCondensed.ttf",
+    "\data\font\DejaVuSansCondensed.ttf",
 )
 
 
