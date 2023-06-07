@@ -47,11 +47,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=("post", "delete"))
     def favorite(self, request, pk=None):
-        return self.add_to_model(request, FavoriteRecipe, pk)
+        return self.add_or_delete(request, FavoriteRecipe, pk)
 
     @action(detail=True, methods=("post", "delete"))
     def shopping_cart(self, request, pk=None):
-        return self.add_to_model(request, ShopingCard, pk)
+        return self.add_or_delete(request, ShopingCard, pk)
 
     @action(detail=False, methods=("get",))
     def download_shopping_cart(self, request):
