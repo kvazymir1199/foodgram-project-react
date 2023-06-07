@@ -63,3 +63,4 @@ class RecipeViewSet(viewsets.ModelViewSet):
             .annotate(total_amount=Sum("amount"))
         )
         return get_pdf_file(buy_list)
+
