@@ -43,8 +43,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
-          sudo docker compose stop backend frontend
-          sudo docker compose rm -f backend frontend
+          sudo docker down
           sudo docker image rm kvazymir1199/foodgramm_backend kvazymir1199/foodgramm_frontend
           sudo docker compose pull backend frontend
           rm touch
