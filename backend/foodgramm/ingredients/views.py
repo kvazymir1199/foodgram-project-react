@@ -9,3 +9,4 @@ class IngredientView(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     filter_backends = (filters.SearchFilter,)
     search_fields = ('^name',)
+    
