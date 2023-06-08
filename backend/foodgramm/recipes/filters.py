@@ -24,7 +24,8 @@ class RecipeFilter(rest_framework.FilterSet):
     tags = rest_framework.ModelMultipleChoiceFilter(
         field_name="tags__slug",
         to_field_name="slug",
-        queryset=Tag.objects.all()
+        queryset=Tag.objects.all(),
+        conjoined=False
     )
 
     def is_favorited_method(self, queryset, name, value):
