@@ -46,7 +46,7 @@ jobs:
           sudo docker down
           sudo docker image rm kvazymir1199/foodgramm_backend kvazymir1199/foodgramm_frontend
           sudo docker compose pull backend frontend
-          rm touch
+          rm .env
           touch .env
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
           echo DB_NAME=${{ secrets.DB_NAME }} >> .env
