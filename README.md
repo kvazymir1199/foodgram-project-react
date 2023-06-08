@@ -1,4 +1,4 @@
-![Foodgram project](https://github.com/kvazymir1199/foodgram-project-react/actions/workflows/foodgram_react_project_workflow.yml/badge.svg)
+![FOODGRAM-PROJECT-REACT](https://github.com/kvazymir1199/foodgram-project-react/actions/workflows/foodgram_react_project_workflow.yml/badge.svg)
 
 # **Foodgram project**
 
@@ -64,9 +64,9 @@
 
 # URL's
 
-- http://51.250.106.196
-- http://51.250.106.196/admin
-- http://51.250.106.196/api
+- http://51.250.70.35
+- http://51.250.70.35/admin
+- http://51.250.70.35/api
 
 # Админ-панель
 
@@ -79,7 +79,7 @@ password: admin
 # Документация
 
 Для просмотра документации к API перейдите по адресу:
-- http://51.250.106.196/api/redoc
+- http://51.250.70.35/api/redoc
 
 # Локальная установка
 
