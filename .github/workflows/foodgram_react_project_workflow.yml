@@ -43,9 +43,10 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
-          sudo docker-compose rm -f backend frontend
+          sudo docker compose stop -f backend frontend
+          sudo docker compose rm -f backend frontend
           sudo docker image rm kvazymir1199/foodgramm_backend kvazymir1199/foodgramm_frontend
-          sudo docker-compose pull backend frontend
+          sudo docker compose pull backend frontend
           rm touch
           touch .env
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
@@ -56,4 +57,5 @@ jobs:
           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           sudo docker compose up -d
+          
                     
