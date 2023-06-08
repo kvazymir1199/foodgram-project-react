@@ -24,10 +24,9 @@ class RecipeFilter(rest_framework.FilterSet):
     tags = rest_framework.ModelMultipleChoiceFilter(
         field_name="tags__slug",
         to_field_name="slug",
-        queryset=Tag.objects.all(),
+        queryset=Tag.objects.all()
     )
-    
-    
+
     def is_favorited_method(self, queryset, name, value):
         if self.request.user.is_anonymous:
             return Recipe.objects.none()
@@ -52,8 +51,7 @@ class RecipeFilter(rest_framework.FilterSet):
             return queryset.difference(new_queryset)
 
         return queryset.filter(id__in=new_queryset)
-    def is_tag_method(self, queryset, name, value):
-        
+
     class Meta:
         model = Recipe
         fields = ("author", "tags")
