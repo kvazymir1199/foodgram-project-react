@@ -18,7 +18,7 @@ from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthorOrAdminPermission,)
-    pagination_class = RecipeViewSetPagination
+    #pagination_class = RecipeViewSetPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
 
