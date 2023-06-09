@@ -7,9 +7,8 @@ from rest_framework.response import Response
 
 from .filters import RecipeFilter
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
-from .pagination import RecipeViewSetPagination
 from .pdf2html import get_pdf_file
-
+from users.pagination import CustomPageNumberPagination
 from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
                           ShortRecipeSerializer)
 
@@ -17,7 +16,7 @@ from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
 class RecipeViewSet(viewsets.ModelViewSet):
     
     queryset = Recipe.objects.all()
-    pagination_class = RecipeViewSetPagination
+    pagination_class = CustomPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
 
