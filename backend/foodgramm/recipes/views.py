@@ -9,11 +9,13 @@ from .filters import RecipeFilter
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from .pagination import RecipeViewSetPagination
 from .pdf2html import get_pdf_file
+
 from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
                           ShortRecipeSerializer)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
+    
     queryset = Recipe.objects.all()
     pagination_class = RecipeViewSetPagination
     filter_backends = (DjangoFilterBackend,)
@@ -26,6 +28,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def add_or_delete(self, request, model, pk=None):
         user = self.request.user
+        if user.is_anonymous:
+            return False
         recipe = get_object_or_404(Recipe, id=pk)
         check = model.objects.filter(
             user=user, recipe=recipe).exists()

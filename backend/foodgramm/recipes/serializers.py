@@ -9,7 +9,8 @@ from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from ingredients.models import Ingredient
 from tags.models import Tag
 from tags.serializers import TagSerializer
-
+from users.serializers import CustomUserSerializer
+from users.models import Subscription
 
 User = get_user_model()
 
@@ -25,16 +26,6 @@ class RecipeIngredientsSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "measurement_unit", "amount")
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            "email",
-            "id",
-            "username",
-            "first_name",
-            "last_name",
-        )
 
 
 class CreateUpdateRecipeIngredientsSerializer(serializers.ModelSerializer):
@@ -68,11 +59,15 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_is_favorited(self, obj):
         user = self.context["request"].user
-        return FavoriteRecipe.objects.filter(user=user, recipe=obj).exists()
+        if isinstance(user, User):
+            return FavoriteRecipe.objects.filter(user=user, recipe=obj).exists()
+        return False
 
     def get_is_in_shopping_cart(self, obj):
         user = self.context["request"].user
-        return ShopingCard.objects.filter(user=user, recipe=obj).exists()
+        if isinstance(user, User):
+            return ShopingCard.objects.filter(user=user, recipe=obj).exists()
+        return False
 
 
 class RecipeCreateUpdateSerializer(serializers.ModelSerializer):

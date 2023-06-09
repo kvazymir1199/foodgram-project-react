@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import (IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
-
+from djoser.serializers import UserSerializer
 from .models import Subscription
 from .pagination import CustomPageNumberPagination
 from .serializers import SubscriptionSerializer
@@ -40,8 +40,10 @@ class CustomUserViewSet(UserViewSet):
     )
     def subscribe(self, request, id=None):
         user = self.request.user
+
         author = get_object_or_404(User, pk=id)
         if self.request.method == 'POST':
+
             if user == author:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             if Subscription.objects.filter(

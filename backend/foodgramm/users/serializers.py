@@ -4,7 +4,6 @@ from rest_framework import serializers
 
 from .models import Subscription
 from recipes.models import Recipe
-from recipes.serializers import ShortRecipeSerializer
 
 User = get_user_model()
 
@@ -43,6 +42,8 @@ class SubscriptionSerializer(CustomUserSerializer):
     )
 
     def get_srs(self):
+        from recipes.serializers import ShortRecipeSerializer
+
         return ShortRecipeSerializer
 
     def get_recipes(self, obj):
