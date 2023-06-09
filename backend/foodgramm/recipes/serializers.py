@@ -10,7 +10,6 @@ from ingredients.models import Ingredient
 from tags.models import Tag
 from tags.serializers import TagSerializer
 from users.serializers import CustomUserSerializer
-from users.models import Subscription
 
 User = get_user_model()
 

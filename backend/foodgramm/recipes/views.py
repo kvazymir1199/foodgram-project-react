@@ -8,10 +8,9 @@ from rest_framework.response import Response
 from .filters import RecipeFilter
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from .pdf2html import get_pdf_file
-from users.pagination import CustomPageNumberPagination
 from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
                           ShortRecipeSerializer)
-
+from users.pagination import CustomPageNumberPagination
 
 class RecipeViewSet(viewsets.ModelViewSet):
     
