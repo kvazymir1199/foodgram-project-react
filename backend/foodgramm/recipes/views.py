@@ -4,20 +4,17 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
 from .filters import RecipeFilter
 from .models import FavoriteRecipe, IngredientsForRecipe, Recipe, ShopingCard
 from .pagination import RecipeViewSetPagination
 from .pdf2html import get_pdf_file
-from .permissions import IsAuthorOrAdminPermission
 from .serializers import (RecipeCreateUpdateSerializer, RecipeSerializer,
                           ShortRecipeSerializer)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
-    permission_classes = (IsAuthorOrAdminPermission,)
     pagination_class = RecipeViewSetPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
