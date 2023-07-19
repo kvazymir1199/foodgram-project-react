@@ -111,10 +111,7 @@ docker-compose up -d --build
 ```
 После успешного запуска контейнеров выполните миграции в проекте:
 ```sh
-docker-compose exec backend python manage.py makemigrations users
-```
-```sh
-docker-compose exec backend python manage.py makemigrations recipes
+docker-compose exec backend python manage.py makemigrations
 ```
 ```sh
 docker-compose exec backend python manage.py migrate
